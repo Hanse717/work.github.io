@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Пользовательское соглашение</title>
+  <style>
+    :root {
+      --bg: #06101c;
+      --text: #ffffff;
+      --muted: #a9bfd4;
+      --cyan: #00e7ff;
+      --line: rgba(0, 231, 255, 0.18);
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+      --container: 920px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(0,231,255,.08), transparent 24%),
+        linear-gradient(180deg, #030913 0%, #07111d 48%, #091526 100%);
+    }
+    .container { width: min(var(--container), calc(100% - 28px)); margin: 0 auto; }
+    .page { padding: 24px 0 40px; }
+    .card {
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)), linear-gradient(180deg, rgba(9,20,36,.94), rgba(8,17,31,.98));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .inner { padding: 24px; }
+    .eyebrow {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(0,231,255,.16);
+      color: #ddfbff;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: .96;
+      letter-spacing: -.04em;
+      text-transform: uppercase;
+    }
+    .lead {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .section { padding-top: 18px; border-top: 1px solid rgba(255,255,255,.06); margin-top: 18px; }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+    p, li {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+    ul { margin: 0; padding-left: 20px; }
+    .note {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(0,231,255,.12);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="container">
+      <article class="card">
+        <div class="inner">
+          <div class="eyebrow">Документ сайта</div>
+          <h1>Пользовательское соглашение</h1>
+          <p class="lead">Настоящее Пользовательское соглашение регулирует условия использования сайта, а также порядок взаимодействия пользователя с формой заявки и размещенной информацией.</p>
+
+          <section class="section">
+            <h2>1. Общие положения</h2>
+            <p>1.1. Сайт носит информационный характер и предназначен для ознакомления пользователей с вакансиями и условиями сотрудничества.</p>
+            <p>1.2. Использование сайта означает согласие пользователя с условиями настоящего соглашения.</p>
+          </section>
+
+          <section class="section">
+            <h2>2. Использование сайта</h2>
+            <p>Пользователь вправе:</p>
+            <ul>
+              <li>просматривать информацию на сайте;</li>
+              <li>оставлять заявку через форму;</li>
+              <li>получать обратную связь по заявке.</li>
+            </ul>
+          </section>
+
+          <section class="section">
+            <h2>3. Ограничения</h2>
+            <p>Пользователь обязуется не:</p>
+            <ul>
+              <li>использовать сайт в противоправных целях;</li>
+              <li>передавать недостоверные данные;</li>
+              <li>мешать работе сайта и его сервисов.</li>
+            </ul>
+          </section>
+
+          <section class="section">
+            <h2>4. Отправка заявки</h2>
+            <p>4.1. Пользователь самостоятельно указывает данные в форме заявки.</p>
+            <p>4.2. Отправка заявки не гарантирует трудоустройство или заключение каких-либо договоренностей.</p>
+            <p>4.3. После отправки заявки представитель сайта может связаться с пользователем.</p>
+          </section>
+
+          <section class="section">
+            <h2>5. Персональные данные</h2>
+            <p>Обработка персональных данных осуществляется в соответствии с Политикой конфиденциальности.</p>
+          </section>
+
+          <section class="section">
+            <h2>6. Ответственность</h2>
+            <p>Администрация сайта не несет ответственности за ошибки, перебои в работе сайта или невозможность связи с пользователем по указанным им данным.</p>
+          </section>
+
+          <section class="section">
+            <h2>7. Заключительные положения</h2>
+            <p>Соглашение может быть изменено без предварительного уведомления. Актуальная версия всегда доступна на сайте.</p>
+          </section>
+
+          <div class="note"></div>
+        </div>
+      </article>
+    </div>
+  </main>
+</body>
+</html>

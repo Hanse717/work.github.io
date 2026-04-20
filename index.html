@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>legkaya-rabota</title>
+  <style>
+    :root {
+      --bg: #06101c;
+      --text: #ffffff;
+      --muted: #a8bdd2;
+      --cyan: #00e7ff;
+      --green: #18ef96;
+      --lime: #c8ff3d;
+      --line: rgba(0, 231, 255, 0.22);
+      --shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+      --container: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(0,231,255,.09), transparent 22%),
+        radial-gradient(circle at 100% 10%, rgba(24,239,150,.06), transparent 18%),
+        linear-gradient(180deg, #030913 0%, #07111d 48%, #091526 100%);
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+
+    .container {
+      width: min(var(--container), calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .section { padding: 18px 0; }
+
+    .frame {
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(9,20,36,.94), rgba(8,17,31,.98));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .jobs-frame {
+      border: 1px solid rgba(200,255,61,.48);
+      box-shadow:
+        0 18px 44px rgba(0, 0, 0, 0.34),
+        0 0 0 1px rgba(200,255,61,.12),
+        0 0 44px rgba(200,255,61,.20),
+        inset 0 0 36px rgba(0,231,255,.04);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(200,255,61,.10), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(7,18,32,.98), rgba(6,14,26,.99));
+    }
+
+    .frame-inner { padding: 20px; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: linear-gradient(180deg, rgba(3,8,18,.88), rgba(3,8,18,.55));
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,231,255,.08);
+    }
+
+    .topbar-row {
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      background: rgba(0,231,255,.08);
+      border: 1px solid rgba(0,231,255,.22);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 12px 18px;
+      border-radius: 16px;
+      font-weight: 900;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .btn-primary {
+      color: #042517;
+      background: linear-gradient(180deg, #2cffb3, #14f195);
+      box-shadow: 0 10px 24px rgba(20,241,149,.24);
+      animation: pulse 1.7s infinite;
+    }
+
+    .btn-secondary {
+      color: #effcff;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(0,231,255,.18);
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 10px 22px rgba(20,241,149,.22); }
+      50% { box-shadow: 0 12px 28px rgba(20,241,149,.34), 0 0 22px rgba(20,241,149,.16); }
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: flex;
+      align-items: center;
+      padding: 18px 0;
+    }
+
+    .hero-box {
+      min-height: min(760px, calc(100vh - 110px));
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      align-items: stretch;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.36), rgba(0,0,0,.78)),
+        radial-gradient(circle at 82% 20%, rgba(0,231,255,.14), transparent 18%),
+        url('hero-bg.png') center center / cover no-repeat;
+    }
+
+    .hero-content,
+    .hero-side {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 34px;
+      max-width: 720px;
+    }
+
+    .hero-side {
+      display: flex;
+      align-items: end;
+      padding: 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+      background: rgba(7,18,31,.55);
+      border: 1px solid rgba(0,231,255,.18);
+      color: #dcfbff;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(38px, 5.5vw, 76px);
+      line-height: .94;
+      letter-spacing: -.045em;
+      text-transform: uppercase;
+      max-width: 8.2ch;
+    }
+
+    .hero-text {
+      margin: 0 0 20px;
+      max-width: 560px;
+      color: #dce8f3;
+      font-size: clamp(16px, 1.9vw, 21px);
+      line-height: 1.58;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #e6fbff;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(0,231,255,.18);
+    }
+
+    .info-card {
+      width: 100%;
+      max-width: 360px;
+      margin-left: auto;
+      border-radius: 22px;
+      background: rgba(8, 18, 32, 0.76);
+      border: 1px solid rgba(0,231,255,.20);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+    }
+
+    .info-title {
+      margin: 0 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .mini-list { display: grid; gap: 10px; }
+
+    .mini-item {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.05);
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      color: var(--cyan);
+      background: rgba(0,231,255,.08);
+      border: 1px solid rgba(0,231,255,.18);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .mini-item strong,
+    .job-card strong,
+    .benefit-card strong,
+    .note-card strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 16px;
+    }
+
+    .mini-item span,
+    .job-card span,
+    .benefit-card span,
+    .note-card span,
+    .section-copy,
+    .form-copy,
+    .footer-copy {
+      color: var(--muted);
+      line-height: 1.52;
+      font-size: 14px;
+    }
+
+    .section-head { margin-bottom: 16px; }
+
+    .section-title {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: .96;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+    }
+
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .job-card,
+    .benefit-card,
+    .note-card,
+    .form-panel,
+    .side-panel {
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.008));
+      border: 1px solid rgba(0,231,255,.16);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
+    }
+
+    .job-card {
+      min-height: 280px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01)),
+        linear-gradient(180deg, rgba(8,18,32,.94), rgba(7,15,28,.99));
+      border: 1px solid rgba(0,231,255,.28);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.03),
+        0 0 0 1px rgba(0,231,255,.07),
+        0 12px 28px rgba(0,0,0,.24),
+        0 0 22px rgba(0,231,255,.10);
+      overflow: hidden;
+    }
+
+    .job-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(0,231,255,.16), transparent 24%, transparent 76%, rgba(24,239,150,.10));
+      mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      -webkit-mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+      padding: 1px;
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    .job-pic {
+      width: 100%;
+      max-width: 170px;
+      aspect-ratio: 1 / 1;
+      height: auto;
+      max-height: none;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      background: linear-gradient(180deg, #1c355e, #081828);
+      border: 1px solid rgba(0,231,255,.25);
+      box-shadow:
+        inset 0 2px 6px rgba(255,255,255,.05),
+        0 10px 20px rgba(0,0,0,.3);
+      margin: 0 auto;
+      flex-shrink: 0;
+    }
+
+    .job-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 12px;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .benefit-card {
+      min-height: 160px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .benefit-top {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .benefit-top > div:last-child {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: .96fr 1.04fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .form-panel,
+    .side-panel { padding: 20px; }
+
+    .form-title {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      text-transform: uppercase;
+      line-height: .96;
+      letter-spacing: -.03em;
+    }
+
+    .form-copy { margin: 0 0 16px; }
+
+    .group { display: grid; gap: 8px; margin-bottom: 12px; }
+
+    label { font-size: 13px; font-weight: 700; color: #dce8f3; }
+
+    input, select {
+      width: 100%;
+      min-height: 56px;
+      padding: 0 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(0,231,255,.16);
+      background: rgba(4,12,22,.8);
+      color: #fff;
+      outline: none;
+    }
+
+    .consent {
+      margin: 12px 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .consent a,
+    .footer-links a { color: var(--cyan); }
+
+    .notes-list { display: grid; gap: 12px; }
+    .note-card { padding: 16px; }
+
+    .note-row {
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-links { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    @media (max-width: 1100px) {
+      .hero-box,
+      .form-grid,
+      .benefits-grid,
+      .jobs-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-box { min-height: auto; }
+      .hero-content { padding: 28px; }
+      .hero-side { padding: 18px; }
+    }
+
+    @media (max-width: 780px) {
+      .container { width: min(100% - 18px, var(--container)); }
+      .topbar-row,
+      .hero-actions,
+      .footer-row { display: grid; }
+      .btn { width: 100%; }
+      .hero { min-height: auto; padding: 10px 0 16px; }
+      .hero-box {
+        min-height: calc(100svh - 88px);
+        min-height: calc(100vh - 88px);
+        grid-template-columns: 1fr;
+        background-position: center top;
+      }
+      .hero-content { padding: 22px 18px 18px; justify-content: flex-start; }
+      .hero-side { padding: 0 18px 18px; }
+      h1 { font-size: 34px; max-width: 10ch; }
+      .benefits-grid,
+      .form-grid { grid-template-columns: 1fr; }
+
+      .jobs-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 82%;
+        grid-template-columns: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 12px;
+        padding: 4px 4px 14px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(200,255,61,.45) transparent;
+      }
+
+      .jobs-grid::-webkit-scrollbar { height: 6px; }
+      .jobs-grid::-webkit-scrollbar-track { background: transparent; }
+      .jobs-grid::-webkit-scrollbar-thumb {
+        background: linear-gradient(90deg, rgba(0,231,255,.35), rgba(200,255,61,.55));
+        border-radius: 999px;
+      }
+
+      .job-card {
+        min-height: 260px;
+        scroll-snap-align: start;
+      }
+
+      .job-pic {
+        max-width: 160px;
+        padding: 12px;
+      }
+
+      .frame-inner,
+      .form-panel,
+      .side-panel { padding: 16px; }
+      .benefit-card { min-height: 144px; }
+    }
+
+    @media (max-width: 430px) {
+      .brand { font-size: 13px; }
+      .topbar-row { min-height: 62px; }
+      .hero-box { min-height: calc(100svh - 80px); min-height: calc(100vh - 80px); }
+      .hero-tags { gap: 8px; }
+      .tag { font-size: 12px; padding: 8px 10px; }
+      .jobs-grid { gap: 10px; grid-auto-columns: 84%; }
+      .job-card { min-height: 248px; padding: 14px; }
+      .job-pic {
+        max-width: 150px;
+        padding: 10px;
+      }
+      .benefit-card { min-height: 136px; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-row">
+        <div class="brand">
+          <div class="brand-badge">⚡</div>
+          <div>legkaya-rabota</div>
+        </div>
+        <a class="btn btn-primary" href="#form">Оставить заявку</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="container">
+      <div class="frame hero-box">
+        <div class="hero-content">
+          <div class="eyebrow">Работа рядом с домом</div>
+          <h1>СТАНЬ ЧАСТЬЮ КОМАНДЫ ЛИДЕРОВ!</h1>
+          <p class="hero-text">Гибкий график, работа рядом с домом и быстрый старт без лишних сложностей.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#form">Оставить заявку</a>
+            <a class="btn btn-secondary" href="#jobs">Смотреть вакансии</a>
+          </div>
+          <div class="hero-tags">
+            <div class="tag">Свободный график</div>
+            <div class="tag">Обучение с нуля</div>
+            <div class="tag">Ежедневные выплаты</div>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="info-card">
+            <p class="info-title">Что важно знать</p>
+            <div class="mini-list">
+              <div class="mini-item">
+                <div class="icon-box">📞</div>
+                <div><strong>Быстрая обратная связь</strong><span>Оставьте заявку — менеджер свяжется с вами и подберет оптимальную вакансию.</span></div>
+              </div>
+              <div class="mini-item">
+                <div class="icon-box">📍</div>
+                <div><strong>Подбор района</strong><span>Работа рядом с домом — подберем удобную для вас локацию.</span></div>
+              </div>
+              <div class="mini-item">
+                <div class="icon-box">✅</div>
+                <div><strong>Понятный старт</strong><span>Все условия объясняем заранее: формат работы, график и выплаты.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="jobs">
+    <div class="container">
+      <div class="frame jobs-frame">
+        <div class="frame-inner">
+          <div class="section-head">
+            <h2 class="section-title">Вакансии</h2>
+            <p class="section-copy">Выберите подходящую вакансию и листайте карточки, чтобы посмотреть все варианты.</p>
+          </div>
+          <div class="jobs-grid" id="carousel">
+            <div class="job-card">
+              <div class="job-pic"><img src="hero1.png" alt="Иконка вакансии курьер"></div>
+              <strong>Курьер</strong>
+              <span>Пешая и велодоставка</span>
+            </div>
+            <div class="job-card">
+              <div class="job-pic"><img src="hero2.png" alt="Иконка вакансии курьер на авто"></div>
+              <strong>Курьер на авто</strong>
+              <span>Доставка на личном ТС</span>
+            </div>
+            <div class="job-card">
+              <div class="job-pic"><img src="hero3.png" alt="Иконка вакансии фасовщик"></div>
+              <strong>Фасовщик</strong>
+              <span>Сборка заказов на складе</span>
+            </div>
+            <div class="job-card">
+              <div class="job-pic"><img src="hero4.png" alt="Иконка вакансии ночной курьер"></div>
+              <strong>Ночной курьер</strong>
+              <span>Работа в темное время</span>
+            </div>
+            <div class="job-card">
+              <div class="job-pic"><img src="hero5.png" alt="Иконка вакансии складовщик"></div>
+              <strong>Складовщик</strong>
+              <span>Прием и учет товара</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="frame">
+        <div class="frame-inner">
+          <div class="section-head">
+            <h2 class="section-title">ПОЧЕМУ МЫ?</h2>
+          </div>
+          <div class="benefits-grid">
+            <div class="benefit-card"><div class="benefit-top"><div class="icon-box">🕒</div><div><strong>Свободный график</strong><span>Выбирай смены сам.</span></div></div></div>
+            <div class="benefit-card"><div class="benefit-top"><div class="icon-box">📚</div><div><strong>Обучение с нуля</strong><span>Всему научим за 1 день.</span></div></div></div>
+            <div class="benefit-card"><div class="benefit-top"><div class="icon-box">💸</div><div><strong>Ежедневные выплаты</strong><span>Деньги приходят каждый вечер.</span></div></div></div>
+            <div class="benefit-card"><div class="benefit-top"><div class="icon-box">📍</div><div><strong>Работа у дома</strong><span>Подберем район рядом с вами.</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="form">
+    <div class="container">
+      <div class="form-grid">
+        <div class="form-panel">
+          <h2 class="form-title">Оставить заявку</h2>
+          <p class="form-copy">Оставьте заявку и мы свяжемся с вами.</p>
+          <div class="group"><label>Имя</label><input type="text" placeholder="Ваше имя"></div>
+          <div class="group"><label>Номер телефона</label><input type="tel" placeholder="+7 (___) ___ - __ - __"></div>
+          <div class="group"><label>Где удобнее связаться?</label><select><option>Telegram</option><option>WhatsApp</option><option>Viber</option></select></div>
+          <div class="consent">Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности и пользовательским соглашением.</div>
+          <a class="btn btn-primary" href="#">ОТПРАВИТЬ</a>
+        </div>
+
+        <div class="side-panel">
+          <h2 class="form-title">После заявки</h2>
+          <div class="notes-list">
+            <div class="note-card"><div class="note-row"><div class="icon-box">📝</div><div><strong>Быстрая связь</strong><span>Форма для быстрого контакта — заполнение займет меньше минуты.</span></div></div></div>
+            <div class="note-card"><div class="note-row"><div class="icon-box">📲</div><div><strong>Удобный канал связи</strong><span>Вы сами выбираете, где удобнее получить сообщение: Telegram, WhatsApp или Viber.</span></div></div></div>
+            <div class="note-card"><div class="note-row"><div class="icon-box">🤝</div><div><strong>Следующий шаг</strong><span>После отправки заявки менеджер свяжется с вами, ответит на вопросы и поможет подобрать подходящую вакансию.</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="frame">
+        <div class="frame-inner footer-row">
+          <div class="footer-copy"></div>
+          <div class="footer-links">
+            <a href="privacy.html">Политика конфиденциальности</a>
+            <a href="terms.html">Пользовательское соглашение</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const mobileQuery = window.matchMedia('(max-width: 780px)');
+      const carousel = document.getElementById('carousel');
+      if (!carousel) return;
+
+      let interval = null;
+      let resumeTimer = null;
+
+      function stopAuto() {
+        if (interval) {
+          clearInterval(interval);
+          interval = null;
+        }
+      }
+
+      function startAuto() {
+        stopAuto();
+        if (!mobileQuery.matches) return;
+
+        interval = setInterval(() => {
+          const firstCard = carousel.querySelector('.job-card');
+          if (!firstCard) return;
+
+          const gap = parseFloat(getComputedStyle(carousel).gap || '0');
+          const step = firstCard.offsetWidth + gap;
+          const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+
+          if (carousel.scrollLeft >= maxScroll - 4) {
+            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            carousel.scrollBy({ left: step, behavior: 'smooth' });
+          }
+        }, 2500);
+      }
+
+      function pauseWithResume() {
+        stopAuto();
+        if (resumeTimer) clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(startAuto, 5000);
+      }
+
+      carousel.addEventListener('touchstart', pauseWithResume, { passive: true });
+      carousel.addEventListener('pointerdown', pauseWithResume, { passive: true });
+      carousel.addEventListener('wheel', pauseWithResume, { passive: true });
+      carousel.addEventListener('mouseenter', stopAuto);
+      carousel.addEventListener('mouseleave', startAuto);
+
+      mobileQuery.addEventListener('change', () => {
+        stopAuto();
+        if (!mobileQuery.matches) {
+          carousel.scrollTo({ left: 0, behavior: 'auto' });
+        } else {
+          startAuto();
+        }
+      });
+
+      window.addEventListener('load', startAuto);
+      window.addEventListener('resize', () => {
+        if (mobileQuery.matches) startAuto();
+      });
+    })();
+  </script>
+</body>
+</html>
